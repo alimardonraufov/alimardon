@@ -1,0 +1,29 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+std::ifstream::pos_type get_size(const std::string& fn){ std::ifstream ifs(fn, std::ifstream::ate);
+return ifs.tellg();
+}
+int main() {
+std::string filename = "text1.txt";
+int filesize = get_size(filename); if(filesize < 0){
+std::cerr << "Error in [" << ＿PRETTY_FUNCTION＿ << "]: " << strerror(errno);
+}
+std::ifstream ifs(filename, std::ifstream:: binary); if(!ifs){
+std::cerr << "Error in [" << ＿PRETTY_FUNCTION＿ << "}: " << strerror(errno);
+}
+std::vector<int> frequency(0x100, 0);
+int i=0;
+std:cout<<"Reading file"<<filename<<":"<<std:endl;
+while(!ifs.eof()){ char ch;
+ifs.read(&ch, 1); frequency[static_cast<unsigned char>(ch)]++;
+if(i%20==0){
+int value = (i +filesize%20)* 100.0 / filesize
+std::cout<<"\r"<<value<<"%"<<std::flush;
+}
+++i;
+}
+std::cout << std::endl;
+for(int i = 0; i < frequency.size(); ++i){
+std::cout << "[" << i << "] = " << frequency[i] << ", \t" << " \n"[i == frequency.size() - 1];
+}
